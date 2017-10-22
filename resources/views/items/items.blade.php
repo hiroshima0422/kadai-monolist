@@ -1,7 +1,6 @@
 @if ($items)
     <div class="row">
         @foreach ($items as $item)
-            @if (Auth::user()->is_wanting($item->code) or Auth::user()->is_haveing($item->code))    
             <div class="item">
                 <div class="col-md-3 col-sm-4 col-xs-12">
                     <div class="panel panel-default">
@@ -16,8 +15,10 @@
                             @endif
                             <div class="buttons text-center">
                                 @if (Auth::check())
-                                    @include('items.want_button', ['item' => $item])
-                                    @include('items.have_button', ['item' => $item])
+                                   @if (Auth::user()->is_wanting($item->code) or Auth::user()->is_haveing($item->code)) 
+                                        @include('items.want_button', ['item' => $item])
+                                        @include('items.have_button', ['item' => $item])
+                                    @endif
                                 @endif
                             </div>
                             
@@ -25,7 +26,6 @@
                     </div>
                 </div>
             </div>
-             @endif
         @endforeach
     </div>
 @endif
